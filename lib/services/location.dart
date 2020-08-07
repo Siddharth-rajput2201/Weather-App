@@ -10,7 +10,7 @@ class Location
   async {
     try{
       Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-      print(position);
+      //print(position);
       latitude = position.latitude;
       longititude = position.longitude;
     }

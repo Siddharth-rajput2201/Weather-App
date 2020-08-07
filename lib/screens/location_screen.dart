@@ -2,11 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:weather/utilities/constants.dart';
 
 class LocationScreen extends StatefulWidget {
+  LocationScreen({this.locationWeather});
+  final locationWeather;
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+ int temprature;
+ var weathertype;
+ String cityname;
+  @override
+  void initState() {
+    super.initState();
+    updateUI(widget.locationWeather);
+  }
+
+  void updateUI(dynamic weatherData)
+  {
+    double temp = weatherData['main']['temp'];
+    temprature = temp.toInt();
+    weathertype = weatherData['weather'][0]['description'];
+    cityname = weatherData['name'];
+    print(temprature);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +68,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      '32°',
+                      temprature.toString(),
                       style: kTempTextStyle,
                     ),
                     Text(
@@ -74,3 +93,15 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
+
+//print(data);
+//var coordinatelong = jsonDecode(data)['coord']['lon'];
+//var coordinatelat = jsonDecode(data)['coord']['lat'];
+//var weatherdata = jsonDecode(data)['weather'][0]['description'];
+//var temprature = jsonDecode(data)['main']['temp'];
+//var cityname = jsonDecode(data)['name'];
+//print(coordinatelong);
+//print(coordinatelat);
+//print(weatherdata);
+//print(temprature);
+//print(cityname);
