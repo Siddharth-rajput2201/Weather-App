@@ -13,10 +13,11 @@ class _LocationScreenState extends State<LocationScreen> {
 
   WeatherModel weather = WeatherModel();
  int temprature;
+ int condition;
  var weathertype;
- String condition;
- String weatherIcon;
  String cityname;
+ String weatherIcon;
+ String weatherMessage;
   @override
   void initState() {
     super.initState();
@@ -27,11 +28,14 @@ class _LocationScreenState extends State<LocationScreen> {
   {
     double temp = weatherData['main']['temp'];
     temprature = temp.toInt();
-    var condition = weatherData['weather'][0]['id'];
-    weatherIcon = weather.getWeatherIcon(condition);
     weathertype = weatherData['weather'][0]['description'];
     cityname = weatherData['name'];
+    condition = weatherData['weather'][0]['id'];
+    weatherIcon = weather.getWeatherIcon(condition);
+    weatherMessage = weather.getMessage(temprature);
+    print(weatherMessage);
     print(temprature);
+    print(condition);
   }
   @override
   Widget build(BuildContext context) {
@@ -79,7 +83,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       style: kTempTextStyle,
                     ),
                     Text(
-                      '☀️',
+                      weatherIcon,
                       style: kConditionTextStyle,
                     ),
                   ],
@@ -88,7 +92,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's 🍦 time in San Francisco!",
+                  '$weatherMessage in $cityname',
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
